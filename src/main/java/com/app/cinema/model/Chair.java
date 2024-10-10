@@ -1,8 +1,8 @@
-package main.java.model;
+package main.java.com.app.cinema.model;
 
 import java.util.Objects;
 
-public class Chair extends Entity{
+public class Chair extends Entity {
 
 	private Long idRoom;
 	private String number;
@@ -14,8 +14,7 @@ public class Chair extends Entity{
 		
 	}
 	
-	public Chair(Long id, Long idRoom, String number, ChairType type, boolean occupied) {
-		super(id);
+	public Chair(Long idRoom, String number, ChairType type, boolean occupied) {
 		this.idRoom = idRoom;
 		this.number = number;
 		this.type = type;

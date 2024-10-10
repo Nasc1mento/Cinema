@@ -1,4 +1,4 @@
-package main.java.model;
+package main.java.com.app.cinema.model;
 
 import java.util.Objects;
 
@@ -13,8 +13,7 @@ public class Movie extends Entity {
 		
 	}
 
-	public Movie(Long id, String title, String description, MovieClassification classification, int duration) {
-		super(id);
+	public Movie(String title, String description, MovieClassification classification, int duration) {
 		this.title = title;
 		this.classification = classification;
 		this.duration = duration;

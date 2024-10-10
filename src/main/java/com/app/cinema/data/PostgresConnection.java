@@ -1,4 +1,4 @@
-package main.java.data;
+package main.java.com.app.cinema.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ public class PostgresConnection implements IConnection {
 		DB_SCHEMA = properties.getProperty("DB_SCHEMA");
 		DB_USER = properties.getProperty("DB_USER");
 		DB_PASSWORD = properties.getProperty("DB_PASSWORD");
-		DB_URL = "jdbc:postgres://" + DB_ADDRESS + ":" + DB_PORT + "/" + DB_SCHEMA;
+		DB_URL = "jdbc:postgresql://" + DB_ADDRESS + ":" + DB_PORT + "/" + DB_SCHEMA;
 	}
 
 	@Override

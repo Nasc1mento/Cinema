@@ -1,4 +1,4 @@
-package main.java.data.dao;
+package main.java.com.app.cinema.data.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import main.java.data.IConnection;
-import main.java.data.PostgresConnection;
-import main.java.exception.DataAccessException;
-import main.java.model.Room;
+import main.java.com.app.cinema.data.IConnection;
+import main.java.com.app.cinema.data.PostgresConnection;
+import main.java.com.app.cinema.exception.DataAccessException;
+import main.java.com.app.cinema.model.Room;
 
 public class RoomDAO implements IDAO<Room> {
 
@@ -31,14 +31,17 @@ public class RoomDAO implements IDAO<Room> {
 	@Override
 	public Room save(Room room) {
 
-		String query = "INSERT INTO ROOM VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO ROOM (NAME, CAPACITY, ADDRESS) VALUES (?, ?, ?) RETURNING ID;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
-			preparedStatement.setLong(1, room.getId());
-			preparedStatement.setString(2, room.getName());
-			preparedStatement.setInt(3, room.getCapacity());
-			preparedStatement.setString(4, room.getAddress());
-
+			preparedStatement.setString(1, room.getName());
+			preparedStatement.setInt(2, room.getCapacity());
+			preparedStatement.setString(3, room.getAddress());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next())
+				room.setId(resultSet.getLong("ID"));
+			
 		} catch (SQLException e) {
 			throw new DataAccessException("Failed to save room", e);
 		}

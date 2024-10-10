@@ -1,4 +1,4 @@
-package main.java.data.dao;
+package main.java.com.app.cinema.data.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import main.java.data.IConnection;
-import main.java.data.PostgresConnection;
-import main.java.exception.DataAccessException;
-import main.java.model.Session;
+import main.java.com.app.cinema.data.IConnection;
+import main.java.com.app.cinema.data.PostgresConnection;
+import main.java.com.app.cinema.exception.DataAccessException;
+import main.java.com.app.cinema.model.Session;
 
 public class SessionDAO implements IDAO<Session> {
 

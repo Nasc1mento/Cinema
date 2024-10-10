@@ -1,26 +1,24 @@
-package main.java.model;
+package main.java.com.app.cinema.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Session extends Entity {
 
-	
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
 	private Long roomId;
 	private Long movieId;
 
+	public Session() {
+
+	}
+
 	public Session(LocalDateTime startTime, LocalDateTime endTime, Long id, Long roomId, Long filmId) {
-		super(id);
 		this.startDateTime = startTime;
 		this.endDateTime = endTime;
 		this.roomId = roomId;
 		this.movieId = filmId;
-	}
-
-	public Session() {
-		
 	}
 
 	public Long getRoomId() {

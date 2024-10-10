@@ -1,4 +1,4 @@
-package main.java.model;
+package main.java.com.app.cinema.model;
 
 import java.util.Objects;
 
@@ -12,8 +12,7 @@ public class Room extends Entity {
 		
 	}
 
-	public Room(Long id, String name, Integer capacity, String address) {
-		super(id);
+	public Room(String name, Integer capacity, String address) {
 		this.name = name;
 		this.capacity = capacity;
 		this.address = address;

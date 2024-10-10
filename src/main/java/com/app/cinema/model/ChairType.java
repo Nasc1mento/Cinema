@@ -1,4 +1,4 @@
-package main.java.model;
+package main.java.com.app.cinema.model;
 
 public enum ChairType {
 	

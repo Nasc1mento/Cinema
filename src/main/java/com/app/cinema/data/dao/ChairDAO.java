@@ -1,4 +1,4 @@
-package main.java.data.dao;
+package main.java.com.app.cinema.data.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import main.java.data.IConnection;
-import main.java.data.PostgresConnection;
-import main.java.exception.DataAccessException;
-import main.java.model.Chair;
-import main.java.model.ChairType;
+import main.java.com.app.cinema.data.IConnection;
+import main.java.com.app.cinema.data.PostgresConnection;
+import main.java.com.app.cinema.exception.DataAccessException;
+import main.java.com.app.cinema.model.Chair;
+import main.java.com.app.cinema.model.ChairType;
 
 public class ChairDAO implements IDAO<Chair> {
 
@@ -32,15 +32,17 @@ public class ChairDAO implements IDAO<Chair> {
 	@Override
 	public Chair save(Chair chair) {
 
-		String query = "INSERT INTO CHAIR VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO CHAIR (NUMBER, ROOM_ID, CHAIR_TYPE_ID, OCCUPIED) VALUES (?, ?, ?, ?) RETURNING ID;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
-			preparedStatement.setLong(1, chair.getId());
+			preparedStatement.setString(1, chair.getNumber());
 			preparedStatement.setLong(2, chair.getIdRoom());
-			preparedStatement.setString(3, chair.getNumber());
 			preparedStatement.setInt(3, chair.getType().getCode());
 			preparedStatement.setBoolean(4, chair.isOccupied());
-			preparedStatement.execute();
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next())
+				chair.setId(resultSet.getLong("ID"));
 
 		} catch (SQLException e) {
 			throw new DataAccessException("Failed to save chair", e);
@@ -52,7 +54,7 @@ public class ChairDAO implements IDAO<Chair> {
 	@Override
 	public Chair update(Chair chair) {
 
-		String query = "UPDATE CHAIR SET NUMBER = ?, TYPE = ?, OCCUPIED = ?, ROOM_ID,  WHERE ID = ?;";
+		String query = "UPDATE CHAIR SET NUMBER = ?, CHAIR_TYPE_ID = ?, OCCUPIED = ?, ROOM_ID = ? WHERE ID = ?;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, chair.getNumber());

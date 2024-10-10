@@ -1,9 +1,9 @@
-package main.java.data.dao;
+package main.java.com.app.cinema.data.dao;
 
 import java.util.List;
 import java.util.Optional;
 
-import main.java.model.Entity;
+import main.java.com.app.cinema.model.Entity;
 
 public interface IDAO <T extends Entity> {
 	

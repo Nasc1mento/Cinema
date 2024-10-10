@@ -1,4 +1,4 @@
-package main.java.data.dao;
+package main.java.com.app.cinema.data.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import main.java.data.IConnection;
-import main.java.data.PostgresConnection;
-import main.java.exception.DataAccessException;
-import main.java.model.Movie;
-import main.java.model.MovieClassification;
+import main.java.com.app.cinema.data.IConnection;
+import main.java.com.app.cinema.data.PostgresConnection;
+import main.java.com.app.cinema.exception.DataAccessException;
+import main.java.com.app.cinema.model.Movie;
+import main.java.com.app.cinema.model.MovieClassification;
 
 public class MovieDAO implements IDAO<Movie> {
 
@@ -32,15 +32,18 @@ public class MovieDAO implements IDAO<Movie> {
 	@Override
 	public Movie save(Movie movie) {
 
-		String query = "INSERT INTO MOVIE VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO MOVIE (TITLE, DESCRIPTION, CLASSIFICATION_ID, DURATION) VALUES (?, ?, ?, ?, ?) RETURNING ID;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
-			preparedStatement.setLong(1, movie.getId());
 			preparedStatement.setString(1, movie.getTitle());
 			preparedStatement.setString(2, movie.getDescription());
 			preparedStatement.setLong(4, movie.getClassification().getCode());
 			preparedStatement.setInt(5, movie.getDuration());
-			preparedStatement.execute();
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if (resultSet.next())
+				movie.setId(resultSet.getLong("ID"));
 
 		} catch (SQLException e) {
 			throw new DataAccessException("Failed to save movie", e);

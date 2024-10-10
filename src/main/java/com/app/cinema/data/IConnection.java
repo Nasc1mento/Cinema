@@ -1,5 +1,5 @@
 
-package main.java.data;
+package main.java.com.app.cinema.data;
 
 import java.sql.Connection;
 

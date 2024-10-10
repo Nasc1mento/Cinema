@@ -1,4 +1,4 @@
-package main.java.exception;
+package main.java.com.app.cinema.exception;
 
 public class DataAccessException extends RuntimeException {
 	

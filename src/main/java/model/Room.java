@@ -6,7 +6,11 @@ public class Room extends Entity {
 	private String name;
 	private Integer capacity;
 	private String address;
-
+	
+	
+	public Room() {
+		
+	}
 
 	public Room(Long id, String name, Integer capacity, String address) {
 		super(id);

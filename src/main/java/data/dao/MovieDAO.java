@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import main.java.data.IConnection;
 import main.java.data.PostgresConnection;
+import main.java.exception.DataAccessException;
 import main.java.model.Movie;
 import main.java.model.MovieClassification;
 
@@ -20,7 +22,7 @@ public class MovieDAO implements IDAO<Movie> {
 		this.postgresConnection = new PostgresConnection();
 	}
 
-	public MovieDAO getInstance() {
+	public static MovieDAO getInstance() {
 		if (instance == null)
 			instance = new MovieDAO();
 
@@ -30,7 +32,7 @@ public class MovieDAO implements IDAO<Movie> {
 	@Override
 	public Movie save(Movie movie) {
 
-		String query = "INSERT INTO MOVIE VALUES (?, ?, ?, ?);";
+		String query = "INSERT INTO MOVIE VALUES (?, ?, ?, ?, ?);";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setLong(1, movie.getId());
@@ -41,7 +43,7 @@ public class MovieDAO implements IDAO<Movie> {
 			preparedStatement.execute();
 
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new DataAccessException("Failed to save movie", e);
 		}
 
 		return movie;
@@ -50,7 +52,7 @@ public class MovieDAO implements IDAO<Movie> {
 	@Override
 	public Movie update(Movie movie) {
 
-		String query = "UPDATE MOVIE SET TITLE = ?, DESCRIPTION = ?, MOVIE_CLASSIFICATION_ID = ?, DURATION = ? WHERE ID = ?;"; 
+		String query = "UPDATE MOVIE SET TITLE = ?, DESCRIPTION = ?, MOVIE_CLASSIFICATION_ID = ?, DURATION = ? WHERE ID = ?;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, movie.getTitle());
@@ -61,7 +63,7 @@ public class MovieDAO implements IDAO<Movie> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new DataAccessException("Failed to update movie", e);
 		}
 
 		return movie;
@@ -71,20 +73,20 @@ public class MovieDAO implements IDAO<Movie> {
 	public boolean deleteById(Long id) {
 
 		String query = "DELETE FROM MOVIE WHERE ID = ?";
-		
+
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setLong(1, id);
-			
+
 			return preparedStatement.executeUpdate() > 0;
-			
+
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new DataAccessException("Failed to delete movie", e);
 		}
 
 	}
 
 	@Override
-	public Movie findById(Long id) {
+	public Optional<Movie> findById(Long id) {
 
 		String query = "SELECT * FROM MOVIE WHERE ID = ?;";
 		Movie movie = null;
@@ -103,10 +105,10 @@ public class MovieDAO implements IDAO<Movie> {
 			}
 
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new DataAccessException("Failed to find movie", e);
 		}
 
-		return movie;
+		return Optional.ofNullable(movie);
 	}
 
 	@Override
@@ -128,7 +130,7 @@ public class MovieDAO implements IDAO<Movie> {
 			}
 
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new DataAccessException("Failed to get movies", e);
 		}
 
 		return movies;

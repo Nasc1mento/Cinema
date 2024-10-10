@@ -1,6 +1,7 @@
 package main.java.data.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import main.java.model.Entity;
 
@@ -12,7 +13,7 @@ public interface IDAO <T extends Entity> {
 	
 	public boolean deleteById(Long id);
 	
-	public T findById(Long id);
+	public Optional<T> findById(Long id);
 	
 	public List<T> getAll();
 	

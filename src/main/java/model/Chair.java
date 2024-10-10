@@ -9,7 +9,11 @@ public class Chair extends Entity{
 	private ChairType type;
 	private boolean occupied;
 	
-
+	
+	public Chair() {
+		
+	}
+	
 	public Chair(Long id, Long idRoom, String number, ChairType type, boolean occupied) {
 		super(id);
 		this.idRoom = idRoom;

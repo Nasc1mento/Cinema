@@ -12,12 +12,11 @@ public enum ChairType {
 		this.code = code;
 	}
 	
-	
 	public int getCode() {
 		return this.code;
 	}
 	
-	public ChairType fromCode(int code) {
+	public static ChairType fromCode(int code) {
 		for (ChairType type : ChairType.values()) {
 			if (type.getCode() == code)
 				return type;

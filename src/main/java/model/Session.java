@@ -5,17 +5,22 @@ import java.util.Objects;
 
 public class Session extends Entity {
 
-	private Long roomId;
-	private Long filmId;
+	
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
+	private Long roomId;
+	private Long movieId;
 
-	public Session(Long id, Long roomId, Long filmId, LocalDateTime startTime, LocalDateTime endTime) {
+	public Session(LocalDateTime startTime, LocalDateTime endTime, Long id, Long roomId, Long filmId) {
 		super(id);
-		this.roomId = roomId;
-		this.filmId = filmId;
 		this.startDateTime = startTime;
 		this.endDateTime = endTime;
+		this.roomId = roomId;
+		this.movieId = filmId;
+	}
+
+	public Session() {
+		
 	}
 
 	public Long getRoomId() {
@@ -26,12 +31,12 @@ public class Session extends Entity {
 		this.roomId = roomId;
 	}
 
-	public Long getFilmId() {
-		return filmId;
+	public Long getMovieId() {
+		return movieId;
 	}
 
-	public void setFilmId(Long filmId) {
-		this.filmId = filmId;
+	public void setMovieId(Long filmId) {
+		this.movieId = filmId;
 	}
 
 	public LocalDateTime getStartTime() {
@@ -42,11 +47,11 @@ public class Session extends Entity {
 		this.startDateTime = startTime;
 	}
 
-	public LocalDateTime getEndTime() {
+	public LocalDateTime getEndDateTime() {
 		return endDateTime;
 	}
 
-	public void setEndTime(LocalDateTime endTime) {
+	public void setEndDateTime(LocalDateTime endTime) {
 		this.endDateTime = endTime;
 	}
 
@@ -69,7 +74,7 @@ public class Session extends Entity {
 
 	@Override
 	public String toString() {
-		return "Session [id=" + getId() + ", roomId=" + roomId + ", filmId=" + filmId + ", startTime=" + startDateTime
+		return "Session [id=" + getId() + ", roomId=" + roomId + ", filmId=" + movieId + ", startTime=" + startDateTime
 				+ ", endTime=" + endDateTime + "]";
 	}
 

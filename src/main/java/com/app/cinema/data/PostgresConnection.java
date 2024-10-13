@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import main.java.util.ConfigLoader;
+import main.java.com.app.cinema.util.ConfigLoader;
 
 public class PostgresConnection implements IConnection {
 

@@ -1,4 +1,4 @@
-package main.java.util;
+package main.java.com.app.cinema.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;

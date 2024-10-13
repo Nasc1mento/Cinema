@@ -115,7 +115,7 @@ public class MovieDAO implements IDAO<Movie> {
 	}
 
 	@Override
-	public List<Movie> getAll() {
+	public List<Movie> findAll() {
 		List<Movie> movies = new ArrayList<Movie>();
 		String query = "SELECT * FROM MOVIE";
 

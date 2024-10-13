@@ -15,6 +15,6 @@ public interface IDAO <T extends Entity> {
 	
 	public Optional<T> findById(Long id);
 	
-	public List<T> getAll();
+	public List<T> findAll();
 	
 }

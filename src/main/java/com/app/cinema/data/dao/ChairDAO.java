@@ -112,7 +112,7 @@ public class ChairDAO implements IDAO<Chair> {
 	}
 
 	@Override
-	public List<Chair> getAll() {
+	public List<Chair> findAll() {
 		
 		List<Chair> chairs = new ArrayList<Chair>();
 		String query = "SELECT * FROM CHAIR";

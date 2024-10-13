@@ -110,7 +110,7 @@ public class SessionDAO implements IDAO<Session> {
 	}
 
 	@Override
-	public List<Session> getAll() {
+	public List<Session> findAll() {
 
 		List<Session> sessions = new ArrayList<Session>();
 		String query = "SELECT * FROM SESSION";

@@ -109,7 +109,7 @@ public class RoomDAO implements IDAO<Room> {
 	}
 
 	@Override
-	public List<Room> getAll() {
+	public List<Room> findAll() {
 
 		List<Room> rooms = new ArrayList<Room>();
 		String query = "SELECT * FROM ROOM";

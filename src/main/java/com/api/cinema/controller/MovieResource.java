@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -47,6 +48,14 @@ public class MovieResource {
 		
 		List<Movie> movies = movieService.findAll();
 		return Response.ok(movies).build();
+	}
+	
+	@PUT
+	@Path(("/{id}"))
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response update(@PathParam(value = "id") Long id, @Valid Movie movie) {
+		movie = this.movieService.update(id, movie);
+		return Response.ok(movie).build();
 	}
 
 	@DELETE

@@ -18,12 +18,6 @@ public class MovieService {
 		return this.movieDAO.save(movie);
 	}
 
-	public boolean deleteById(Long id) {
-		return this.movieDAO.findById(id).map(movie -> {
-			return this.movieDAO.deleteById(id);
-		}).orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
-	}
-
 	public Movie findById(Long id) {
 		return this.movieDAO.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
@@ -34,7 +28,20 @@ public class MovieService {
 	}
 
 	public Movie findByName(String name) {
-		return this.movieDAO.findByName(name).
-				orElseThrow(() -> new ResourceNotFoundException("Movie with name: " + name + " not found"));
+		return this.movieDAO.findByName(name)
+				.orElseThrow(() -> new ResourceNotFoundException("Movie with name: " + name + " not found"));
+	}
+
+	public Movie update(Long id, Movie movie) {
+		return this.movieDAO.findById(id).map(m -> {
+			movie.setId(id);
+			return this.movieDAO.update(movie);
+		}).orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
+	}
+
+	public boolean deleteById(Long id) {
+		return this.movieDAO.findById(id).map(m -> {
+			return this.movieDAO.deleteById(id);
+		}).orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
 	}
 }

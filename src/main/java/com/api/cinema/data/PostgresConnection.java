@@ -18,7 +18,7 @@ public class PostgresConnection implements IConnection {
 	private Connection connection;
 
 	static {
-		Properties properties = ConfigLoader.loadConfig();
+		Properties properties = new ConfigLoader().getProperties();
 		DB_ADDRESS = properties.getProperty("DB_ADDRESS");
 		DB_PORT = properties.getProperty("DB_PORT");
 		DB_SCHEMA = properties.getProperty("DB_SCHEMA");

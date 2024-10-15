@@ -6,24 +6,37 @@ import java.util.Properties;
 
 public class ConfigLoader {
 
-	private static final String CONFIG_FILE_PATH = "config.properties";
-	private static Properties properties;
+	private static final String CONFIG_FILE_NAME;
+	private final String configFilePath;
+	private final Properties properties;
 
-	private ConfigLoader() {
-
+	static {
+		CONFIG_FILE_NAME = "config.properties";
 	}
 
-	public static Properties loadConfig() {
-		if (properties == null) {
-			properties = new Properties();
+	public ConfigLoader() {
+		this.configFilePath = getConfigFilePath();
+		this.properties = loadProperties();
+	}
 
-			try (FileInputStream fileInputStream = new FileInputStream(CONFIG_FILE_PATH)) {
-				properties.load(fileInputStream);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to load config from file: " + CONFIG_FILE_PATH, e);
-			}
+	public Properties getProperties() {
+		return this.properties;
+	}
+
+	private Properties loadProperties() {
+
+		Properties properties = new Properties();
+
+		try (FileInputStream fileInputStream = new FileInputStream(configFilePath)) {
+			properties.load(fileInputStream);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to load config from file: " + configFilePath, e);
 		}
 
 		return properties;
+	}
+
+	private String getConfigFilePath() {
+		return this.getClass().getClassLoader().getResource(CONFIG_FILE_NAME).getPath();
 	}
 }

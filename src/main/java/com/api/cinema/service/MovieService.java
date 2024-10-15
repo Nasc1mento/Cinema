@@ -1,7 +1,6 @@
 package com.api.cinema.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.api.cinema.data.dao.MovieDAO;
 import com.api.cinema.exception.ResourceNotFoundException;

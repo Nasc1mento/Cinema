@@ -1,5 +1,0 @@
-DB_ADDRESS = localhost
-DB_PORT = 5432
-DB_SCHEMA = cinema
-DB_USER = postgres
-DB_PASSWORD = postgres

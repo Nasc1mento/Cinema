@@ -21,11 +21,13 @@ public enum MovieClassification {
 	}
 	
 	
-	public static MovieClassification fromCode(int code) {
+	public static MovieClassification fromCode(final int code) {
         for (MovieClassification classification : values()) {
             if (classification.getCode() == code) {
                 return classification;
             }
+            
+            
         }
         
         throw new IllegalArgumentException("No constant with code: " + code);

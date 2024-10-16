@@ -83,7 +83,7 @@ public class ChairDAO implements IDAO<Chair>{
 			return preparedStatement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to delete chair", e);
+			throw new DataAccessException("Failed to delete chair with id: " + id, e);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class ChairDAO implements IDAO<Chair>{
 	public List<Chair> findAll() {
 		
 		List<Chair> chairs = new ArrayList<Chair>();
-		String query = "SELECT * FROM CHAIR";
+		String query = "SELECT * FROM CHAIR;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -133,6 +133,31 @@ public class ChairDAO implements IDAO<Chair>{
 
 		} catch (SQLException e) {
 			throw new DataAccessException("Failed to get chairs", e);
+		}
+
+		return chairs;
+	}
+	
+	public List<Chair> findAllByRoom(Long idRoom) {
+		List<Chair> chairs = new ArrayList<Chair>();
+		String query = "SELECT * FROM CHAIR WHERE ROOM_ID = ?;"; 
+
+		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
+			preparedStatement.setLong(1, idRoom);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Chair chair = new Chair();
+				chair.setId(resultSet.getLong("ID"));
+				chair.setIdRoom(resultSet.getLong("ROOM_ID"));
+				chair.setNumber(resultSet.getString("NUMBER"));
+				chair.setType(ChairType.fromCode(resultSet.getInt("TYPE_ID")));
+				chair.setOccupied(resultSet.getBoolean("OCCUPIED"));
+				chairs.add(chair);
+			}
+
+		} catch (SQLException e) {
+			throw new DataAccessException("Failed to get chairs by room id: " + idRoom, e);
 		}
 
 		return chairs;

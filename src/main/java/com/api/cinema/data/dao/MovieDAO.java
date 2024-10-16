@@ -139,28 +139,54 @@ public class MovieDAO implements IDAO<Movie> {
 
 	}
 	
-	public Optional<Movie> findByName(String name) {
-		String query = "SELECT * FROM MOVIE WHERE NAME = ?;";
-		Movie movie = null;
+	public List<Movie> findAllByTitle(String title) {
+		String query = "SELECT * FROM MOVIE WHERE TITLE LIKE LOWER(?);";
+		List<Movie> movies = new ArrayList<Movie>();
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, name);
+			preparedStatement.setString(1, "%" + title + "%");
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				movie = new Movie();
+				Movie movie = new Movie();
 				movie.setId(resultSet.getLong("ID"));
 				movie.setTitle(resultSet.getString("TITLE"));
 				movie.setDescription(resultSet.getString("DESCRIPTION"));
 				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
 				movie.setDuration(resultSet.getInt("DURATION"));
+				movies.add(movie);
 			}
 
 		} catch (SQLException e) {
 			throw new DataAccessException("Failed to find movie", e);
 		}
 
-		return Optional.ofNullable(movie);
+		return movies;
+	}
+	
+	public List<Movie> findAllByClassification(MovieClassification classification) {
+		String query = "SELECT * FROM MOVIE WHERE MOVIE_CLASSIFICATION_ID = ?;";
+		List<Movie> movies = new ArrayList<Movie>();
+
+		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
+			preparedStatement.setInt(1, classification.getCode());
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Movie movie = new Movie();
+				movie.setId(resultSet.getLong("ID"));
+				movie.setTitle(resultSet.getString("TITLE"));
+				movie.setDescription(resultSet.getString("DESCRIPTION"));
+				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
+				movie.setDuration(resultSet.getInt("DURATION"));
+				movies.add(movie);
+			}
+
+		} catch (SQLException e) {
+			throw new DataAccessException("Failed to find movie by classification: " + classification, e);
+		}
+
+		return movies;
 	}
 
 }

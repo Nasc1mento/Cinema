@@ -3,6 +3,7 @@ package com.api.cinema;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.api.cinema.controller.ChairResource;
 import com.api.cinema.controller.MovieResource;
 import com.api.cinema.exception.ApiExceptionMapper;
 
@@ -17,7 +18,7 @@ public class App extends Application {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 		classes.add(MovieResource.class);
 //		classes.add(RoomResource.class);
-//		classes.add(ChairResource.class);
+		classes.add(ChairResource.class);
 //		classes.add(SessionResource.class);
 
 		classes.add(ApiExceptionMapper.class);

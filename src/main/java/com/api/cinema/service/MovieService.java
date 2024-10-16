@@ -5,6 +5,7 @@ import java.util.List;
 import com.api.cinema.data.dao.MovieDAO;
 import com.api.cinema.exception.ResourceNotFoundException;
 import com.api.cinema.model.Movie;
+import com.api.cinema.model.MovieClassification;
 
 public class MovieService {
 
@@ -27,11 +28,6 @@ public class MovieService {
 		return this.movieDAO.findAll();
 	}
 
-	public Movie findByName(String name) {
-		return this.movieDAO.findByName(name)
-				.orElseThrow(() -> new ResourceNotFoundException("Movie with name: " + name + " not found"));
-	}
-
 	public Movie update(Long id, Movie movie) {
 		return this.movieDAO.findById(id).map(m -> {
 			movie.setId(id);
@@ -44,4 +40,22 @@ public class MovieService {
 			return this.movieDAO.deleteById(id);
 		}).orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
 	}
+	
+	public List<Movie> findAllByTitle(String title) {
+		return this.movieDAO.findAllByTitle(title);
+	}
+	
+	
+	public List<Movie> findAllByClassification(MovieClassification idClassification) {
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	 
+	
 }

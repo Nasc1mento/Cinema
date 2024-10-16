@@ -3,6 +3,7 @@ package com.api.cinema.controller;
 import java.util.List;
 
 import com.api.cinema.model.Movie;
+import com.api.cinema.model.MovieClassification;
 import com.api.cinema.service.MovieService;
 
 import jakarta.validation.Valid;
@@ -50,10 +51,29 @@ public class MovieResource {
 		return Response.ok(movies).build();
 	}
 	
+	@GET
+	@Path("/filter/title/{title}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllByTitle(@PathParam("title") String title) {
+		
+		List<Movie> movies = this.movieService.findAllByTitle(title);
+		return Response.ok(movies).build();
+	}
+	
+	@GET
+	@Path("/filter/classification/{classification}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllByClassification(@PathParam("classification") MovieClassification classification) {
+		
+		List<Movie> movies = this.movieService.findAllByClassification(classification);
+		return Response.ok(movies).build();
+	}
+	
 	@PUT
 	@Path(("/{id}"))
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam(value = "id") Long id, @Valid Movie movie) {
+		
 		movie = this.movieService.update(id, movie);
 		return Response.ok(movie).build();
 	}

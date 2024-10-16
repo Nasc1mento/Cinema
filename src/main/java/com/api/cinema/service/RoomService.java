@@ -1,5 +1,13 @@
 package com.api.cinema.service;
 
-public class RoomService {
+import com.api.cinema.data.dao.RoomDAO;
 
+public class RoomService {
+	
+	private final RoomDAO roomDAO;
+	
+	
+	public RoomService() {
+		this.roomDAO = RoomDAO.getInstance();
+	}
 }

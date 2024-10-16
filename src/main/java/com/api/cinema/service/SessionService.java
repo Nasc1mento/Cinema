@@ -1,5 +1,13 @@
 package com.api.cinema.service;
 
-public class SessionService {
+import com.api.cinema.data.dao.SessionDAO;
 
+public class SessionService {
+	
+	
+	private final SessionDAO sessionDAO;
+	
+	public SessionService() {
+		this.sessionDAO = SessionDAO.getInstance();
+	}
 }

@@ -37,9 +37,5 @@ public enum MovieClassification {
 
 		return movieClassification;
 	}
-	
-	public static int fromMovieClassification(MovieClassification movieClassification) {
-		return movieClassification.code;
-	}
 
 }

@@ -38,8 +38,8 @@ public class SessionResource {
 	@Path("/{id}")
 	public Response get(@PathParam(value = "id") Long id) {
 		
-		Session room = sessionService.findById(id);
-		return Response.ok(room).build();
+		Session session = sessionService.findById(id);
+		return Response.ok(session).build();
 	}
 
 	@GET

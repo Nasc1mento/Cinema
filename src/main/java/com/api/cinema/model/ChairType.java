@@ -25,7 +25,7 @@ public enum ChairType {
 		return this.code;
 	}
 
-	public static ChairType fromCode(final int code) {
+	public static ChairType fromCode(int code) {
 		ChairType chairType = values.get(code);
 
 		if (chairType == null)

@@ -11,11 +11,9 @@ import com.api.cinema.data.IConnection;
 import com.api.cinema.data.PostgresConnection;
 import com.api.cinema.exception.DataAccessException;
 import com.api.cinema.model.Chair;
-import com.api.cinema.model.ChairType;
 
-public class ChairDAO implements IDAO<Chair>{
-	
-	
+public class ChairDAO implements IDAO<Chair> {
+
 	private IConnection postgresConnection;
 	private static ChairDAO instance;
 
@@ -38,10 +36,10 @@ public class ChairDAO implements IDAO<Chair>{
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, chair.getNumber());
 			preparedStatement.setLong(2, chair.getIdRoom());
-			preparedStatement.setInt(3, chair.getType().getCode());
+			preparedStatement.setInt(3, chair.getType());
 			preparedStatement.setBoolean(4, chair.isOccupied());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
+
 			if (resultSet.next())
 				chair.setId(resultSet.getLong("ID"));
 
@@ -59,7 +57,7 @@ public class ChairDAO implements IDAO<Chair>{
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, chair.getNumber());
-			preparedStatement.setLong(2, chair.getType().getCode());
+			preparedStatement.setLong(2, chair.getType());
 			preparedStatement.setBoolean(3, chair.isOccupied());
 			preparedStatement.setLong(4, chair.getIdRoom());
 			preparedStatement.setLong(5, chair.getId());
@@ -101,7 +99,7 @@ public class ChairDAO implements IDAO<Chair>{
 				chair.setId(resultSet.getLong("ID"));
 				chair.setIdRoom(resultSet.getLong("ID_ROOM"));
 				chair.setNumber(resultSet.getString("NUMBER"));
-				chair.setType(ChairType.fromCode(resultSet.getInt("TYPE_ID")));
+				chair.setType(resultSet.getInt("TYPE_ID"));
 				chair.setOccupied(resultSet.getBoolean("OCCUPIED"));
 			}
 
@@ -114,7 +112,7 @@ public class ChairDAO implements IDAO<Chair>{
 
 	@Override
 	public List<Chair> findAll() {
-		
+
 		List<Chair> chairs = new ArrayList<Chair>();
 		String query = "SELECT * FROM CHAIR;";
 
@@ -126,7 +124,7 @@ public class ChairDAO implements IDAO<Chair>{
 				chair.setId(resultSet.getLong("ID"));
 				chair.setIdRoom(resultSet.getLong("ROOM_ID"));
 				chair.setNumber(resultSet.getString("NUMBER"));
-				chair.setType(ChairType.fromCode(resultSet.getInt("TYPE_ID")));
+				chair.setType(resultSet.getInt("TYPE_ID"));
 				chair.setOccupied(resultSet.getBoolean("OCCUPIED"));
 				chairs.add(chair);
 			}
@@ -137,7 +135,7 @@ public class ChairDAO implements IDAO<Chair>{
 
 		return chairs;
 	}
-	
+
 	public List<Chair> findAllByRoom(Long idRoom) {
 		List<Chair> chairs = new ArrayList<Chair>();
 		String query = "SELECT * FROM CHAIR WHERE ROOM_ID = ?;";
@@ -151,7 +149,7 @@ public class ChairDAO implements IDAO<Chair>{
 				chair.setId(resultSet.getLong("ID"));
 				chair.setIdRoom(resultSet.getLong("ROOM_ID"));
 				chair.setNumber(resultSet.getString("NUMBER"));
-				chair.setType(ChairType.fromCode(resultSet.getInt("TYPE_ID")));
+				chair.setType(resultSet.getInt("TYPE_ID"));
 				chair.setOccupied(resultSet.getBoolean("OCCUPIED"));
 				chairs.add(chair);
 			}

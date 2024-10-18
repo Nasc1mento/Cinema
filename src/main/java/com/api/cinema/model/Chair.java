@@ -40,12 +40,12 @@ public class Chair extends Entity {
 		return occupied;
 	}
 
-	public ChairType getType() {
-		return type;
+	public int getType() {
+		return type.getCode();
 	}
 
-	public void setType(ChairType type) {
-		this.type = type;
+	public void setType(int type) {
+		this.type = ChairType.fromCode(type);
 	}
 
 	public void setOccupied(boolean ocupated) {

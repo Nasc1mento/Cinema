@@ -44,7 +44,7 @@ public class RoomDAO implements IDAO<Room> {
 				room.setId(resultSet.getLong("ID"));
 			
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to save room", e);
+			throw new DataAccessException("Failed to save room");
 		}
 
 		return room;
@@ -63,7 +63,7 @@ public class RoomDAO implements IDAO<Room> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to update room", e);
+			throw new DataAccessException("Failed to update room");
 		}
 
 		return room;
@@ -80,7 +80,7 @@ public class RoomDAO implements IDAO<Room> {
 			return preparedStatement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to delete room", e);
+			throw new DataAccessException("Failed to delete room");
 		}
 	}
 
@@ -103,7 +103,7 @@ public class RoomDAO implements IDAO<Room> {
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to find room", e);
+			throw new DataAccessException("Failed to find room");
 		}
 
 		return Optional.ofNullable(room);
@@ -128,7 +128,7 @@ public class RoomDAO implements IDAO<Room> {
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to get rooms", e);
+			throw new DataAccessException("Failed to get rooms");
 		}
 
 		return rooms;

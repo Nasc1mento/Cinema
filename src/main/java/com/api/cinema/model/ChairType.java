@@ -1,14 +1,23 @@
 package com.api.cinema.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ChairType {
 
-	DEFAULT(1), 
-	OBSESITY(2), 
+	DEFAULT(1), //
+	OBESITY(2), //
 	DISABILITY(3);
 
 	private final int code;
+	private final static Map<Integer, ChairType> values = new HashMap<Integer, ChairType>(ChairType.values().length);
 
-	ChairType(int code) {
+	static {
+		for (ChairType chairType : ChairType.values())
+			values.put(chairType.code, chairType);
+	}
+
+	private ChairType(int code) {
 		this.code = code;
 	}
 
@@ -17,11 +26,12 @@ public enum ChairType {
 	}
 
 	public static ChairType fromCode(final int code) {
-		for (ChairType type : ChairType.values()) {
-			if (type.getCode() == code)
-				return type;
-		}
+		ChairType chairType = values.get(code);
 
-		throw new IllegalArgumentException("No constant with code: " + code);
+		if (chairType == null)
+			throw new IllegalArgumentException("Invalid code: " + code);
+
+		return chairType;
 	}
+
 }

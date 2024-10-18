@@ -35,12 +35,12 @@ public class Movie extends Entity {
 		this.description = description;
 	}
 
-	public MovieClassification getClassification() {
-		return classification;
+	public int getClassification() {
+		return classification.getCode();
 	}
 
-	public void setClassification(MovieClassification classification) {
-		this.classification = classification;
+	public void setClassification(int classification) {
+		this.classification = MovieClassification.fromCode(classification);
 	}
 
 	public int getDuration() {

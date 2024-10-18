@@ -36,7 +36,7 @@ public class MovieDAO implements IDAO<Movie> {
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, movie.getTitle());
 			preparedStatement.setString(2, movie.getDescription());
-			preparedStatement.setLong(3, movie.getClassification().getCode());
+			preparedStatement.setLong(3, movie.getClassification());
 			preparedStatement.setInt(4, movie.getDuration());
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -45,7 +45,7 @@ public class MovieDAO implements IDAO<Movie> {
 				movie.setId(resultSet.getLong("ID"));
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to save movie", e);
+			throw new DataAccessException("Failed to save movie");
 		}
 
 		return movie;
@@ -59,13 +59,13 @@ public class MovieDAO implements IDAO<Movie> {
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, movie.getTitle());
 			preparedStatement.setString(2, movie.getDescription());
-			preparedStatement.setLong(3, movie.getClassification().getCode());
+			preparedStatement.setLong(3, movie.getClassification());
 			preparedStatement.setInt(4, movie.getDuration());
 			preparedStatement.setLong(5, movie.getId());
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to update movie", e);
+			throw new DataAccessException("Failed to update movie");
 		}
 
 		return movie;
@@ -82,7 +82,7 @@ public class MovieDAO implements IDAO<Movie> {
 			return preparedStatement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to delete movie", e);
+			throw new DataAccessException("Failed to delete movie");
 		}
 
 	}
@@ -102,12 +102,12 @@ public class MovieDAO implements IDAO<Movie> {
 				movie.setId(resultSet.getLong("ID"));
 				movie.setTitle(resultSet.getString("TITLE"));
 				movie.setDescription(resultSet.getString("DESCRIPTION"));
-				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
+				movie.setClassification(resultSet.getInt("MOVIE_CLASSIFICATION_ID"));
 				movie.setDuration(resultSet.getInt("DURATION"));
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to find movie", e);
+			throw new DataAccessException("Failed to find movie");
 		}
 
 		return Optional.ofNullable(movie);
@@ -126,13 +126,13 @@ public class MovieDAO implements IDAO<Movie> {
 				movie.setId(resultSet.getLong("ID"));
 				movie.setTitle(resultSet.getString("TITLE"));
 				movie.setDescription(resultSet.getString("DESCRIPTION"));
-				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
+				movie.setClassification(resultSet.getInt("MOVIE_CLASSIFICATION_ID"));
 				movie.setDuration(resultSet.getInt("DURATION"));
 				movies.add(movie);
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to get movies", e);
+			throw new DataAccessException("Failed to get movies");
 		}
 
 		return movies;
@@ -152,20 +152,20 @@ public class MovieDAO implements IDAO<Movie> {
 				movie.setId(resultSet.getLong("ID"));
 				movie.setTitle(resultSet.getString("TITLE"));
 				movie.setDescription(resultSet.getString("DESCRIPTION"));
-				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
+				movie.setClassification(resultSet.getInt("MOVIE_CLASSIFICATION_ID"));
 				movie.setDuration(resultSet.getInt("DURATION"));
 				movies.add(movie);
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to find movie", e);
+			throw new DataAccessException("Failed to find movie");
 		}
 
 		return movies;
 	}
 	
 	public List<Movie> findAllByClassification(MovieClassification classification) {
-		String query = "SELECT * FROM MOVIE WHERE MOVIE_CLASSIFICATION_ID = ?;";
+		String query = "SELECT * FROM MOVIE WHERE MOVIE_CLASSIFICATION_ID = ? ORDER BY TITLE;";
 		List<Movie> movies = new ArrayList<Movie>();
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
@@ -177,13 +177,13 @@ public class MovieDAO implements IDAO<Movie> {
 				movie.setId(resultSet.getLong("ID"));
 				movie.setTitle(resultSet.getString("TITLE"));
 				movie.setDescription(resultSet.getString("DESCRIPTION"));
-				movie.setClassification(MovieClassification.fromCode(resultSet.getInt("MOVIE_CLASSIFICATION_ID")));
+				movie.setClassification(resultSet.getInt("MOVIE_CLASSIFICATION_ID"));
 				movie.setDuration(resultSet.getInt("DURATION"));
 				movies.add(movie);
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to find movie by classification: " + classification, e);
+			throw new DataAccessException("Failed to find movie by classification: " + classification);
 		}
 
 		return movies;

@@ -31,7 +31,7 @@ public class PostgresConnection implements IConnection {
 	public Connection getConnection() {
 
 		if (connection == null) {
-			
+
 			try {
 				Class.forName("org.postgresql.Driver");
 				connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -44,4 +44,5 @@ public class PostgresConnection implements IConnection {
 
 		return connection;
 	}
+
 }

@@ -40,22 +40,14 @@ public class MovieService {
 			return this.movieDAO.deleteById(id);
 		}).orElseThrow(() -> new ResourceNotFoundException("Movie with id: " + id + " not found"));
 	}
-	
+
 	public List<Movie> findAllByTitle(String title) {
 		return this.movieDAO.findAllByTitle(title);
 	}
-	
-	
-	public List<Movie> findAllByClassification(MovieClassification idClassification) {
-		return null;
+
+	public List<Movie> findAllByClassification(int idClassification) {
+		MovieClassification movieClassification = MovieClassification.fromCode(idClassification);
+		return this.movieDAO.findAllByClassification(movieClassification);
 	}
-	
-	
-	
-	
-	
-	
-	
-	 
-	
+
 }

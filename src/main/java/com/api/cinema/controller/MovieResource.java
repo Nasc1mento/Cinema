@@ -3,7 +3,6 @@ package com.api.cinema.controller;
 import java.util.List;
 
 import com.api.cinema.model.Movie;
-import com.api.cinema.model.MovieClassification;
 import com.api.cinema.service.MovieService;
 
 import jakarta.validation.Valid;
@@ -29,7 +28,7 @@ public class MovieResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(@Valid Movie movie) {
-		
+
 		movie = this.movieService.save(movie);
 		return Response.ok(movie).build();
 	}
@@ -38,7 +37,7 @@ public class MovieResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
 	public Response get(@PathParam(value = "id") Long id) {
-		
+
 		Movie movie = movieService.findById(id);
 		return Response.ok(movie).build();
 	}
@@ -46,34 +45,34 @@ public class MovieResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		
+
 		List<Movie> movies = movieService.findAll();
 		return Response.ok(movies).build();
 	}
-	
+
 	@GET
 	@Path("/filter/title/{title}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllByTitle(@PathParam("title") String title) {
-		
+
 		List<Movie> movies = this.movieService.findAllByTitle(title);
 		return Response.ok(movies).build();
 	}
-	
+
 	@GET
 	@Path("/filter/classification/{classification}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllByClassification(@PathParam("classification") MovieClassification classification) {
-		
-		List<Movie> movies = this.movieService.findAllByClassification(classification);
+	public Response getAllByClassification(@PathParam("classification") int idClassification) {
+
+		List<Movie> movies = this.movieService.findAllByClassification(idClassification);
 		return Response.ok(movies).build();
 	}
-	
+
 	@PUT
 	@Path(("/{id}"))
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam(value = "id") Long id, @Valid Movie movie) {
-		
+
 		movie = this.movieService.update(id, movie);
 		return Response.ok(movie).build();
 	}
@@ -81,7 +80,7 @@ public class MovieResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteById(@PathParam("id") Long id) {
-		
+
 		this.movieService.deleteById(id);
 		return Response.noContent().build();
 	};

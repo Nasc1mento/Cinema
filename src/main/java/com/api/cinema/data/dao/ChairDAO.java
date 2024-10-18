@@ -46,7 +46,7 @@ public class ChairDAO implements IDAO<Chair>{
 				chair.setId(resultSet.getLong("ID"));
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to save chair", e);
+			throw new DataAccessException("Failed to save chair");
 		}
 
 		return chair;
@@ -66,7 +66,7 @@ public class ChairDAO implements IDAO<Chair>{
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to update chair", e);
+			throw new DataAccessException("Failed to update chair");
 		}
 
 		return chair;
@@ -83,7 +83,7 @@ public class ChairDAO implements IDAO<Chair>{
 			return preparedStatement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to delete chair with id: " + id, e);
+			throw new DataAccessException("Failed to delete chair with id: " + id);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class ChairDAO implements IDAO<Chair>{
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to find chair", e);
+			throw new DataAccessException("Failed to find chair");
 		}
 
 		return Optional.ofNullable(chair);
@@ -132,7 +132,7 @@ public class ChairDAO implements IDAO<Chair>{
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to get chairs", e);
+			throw new DataAccessException("Failed to get chairs");
 		}
 
 		return chairs;
@@ -140,7 +140,7 @@ public class ChairDAO implements IDAO<Chair>{
 	
 	public List<Chair> findAllByRoom(Long idRoom) {
 		List<Chair> chairs = new ArrayList<Chair>();
-		String query = "SELECT * FROM CHAIR WHERE ROOM_ID = ?;"; 
+		String query = "SELECT * FROM CHAIR WHERE ROOM_ID = ?;";
 
 		try (PreparedStatement preparedStatement = this.postgresConnection.getConnection().prepareStatement(query)) {
 			preparedStatement.setLong(1, idRoom);
@@ -157,7 +157,7 @@ public class ChairDAO implements IDAO<Chair>{
 			}
 
 		} catch (SQLException e) {
-			throw new DataAccessException("Failed to get chairs by room id: " + idRoom, e);
+			throw new DataAccessException("Failed to get chairs by room id: " + idRoom);
 		}
 
 		return chairs;
